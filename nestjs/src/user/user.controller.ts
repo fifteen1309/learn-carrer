@@ -7,13 +7,18 @@ import {
   Param,
   Delete,
   UsePipes,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ValidationPipe } from 'src/validation/validation.pipe';
+import { Roles } from 'src/decorators/roles.decorator';
+import { UserRole } from 'src/common/const';
+import { RolesGuard } from 'src/guards/roles.guard';
 
 @Controller('user')
+@UseGuards(RolesGuard)
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
@@ -23,6 +28,7 @@ export class UserController {
   }
 
   @Get()
+  @Roles([UserRole.Admin])
   findAll() {
     return this.userService.findAll();
   }

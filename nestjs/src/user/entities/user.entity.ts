@@ -1,3 +1,4 @@
+import { UserRole } from 'src/common/const';
 import {
   Column,
   CreateDateColumn,
@@ -16,6 +17,9 @@ export class User {
 
   @Column()
   password: string;
+
+  @Column({ default: UserRole.User })
+  role: UserRole;
 
   @CreateDateColumn()
   createdAt: Date;
